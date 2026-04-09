@@ -49,7 +49,7 @@ jobs:
           lime rebuild linux -64 -release -nocolor -verbose -nocffi
           lime rebuild hl -clean -release -nocolor -verbose -nocffi
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         if: ${{ matrix.haxe-version == '4.2.5' }} # upload for only one version of Haxe
         with:
           name: Linux-NDLL
@@ -58,7 +58,7 @@ jobs:
             !**/.gitignore
           if-no-files-found: error
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         if: ${{ matrix.haxe-version == '4.2.5' }} # upload for only one version of Haxe
         with:
           name: Linux64-NDLL
@@ -67,7 +67,7 @@ jobs:
             !**/.gitignore
           if-no-files-found: error
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         if: ${{ matrix.haxe-version == '4.2.5' }} # upload for only one version of Haxe
         with:
           name: Linux64-Hashlink
@@ -120,7 +120,7 @@ jobs:
           lime rebuild macos -clean -release -64 -nocolor -verbose -nocffi
           lime rebuild hl -clean -release -nocolor -verbose -nocffi
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Mac64-NDLL
           path: |
@@ -128,7 +128,7 @@ jobs:
             !**/.gitignore
           if-no-files-found: error
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Mac64-Hashlink
           path: |
@@ -173,7 +173,7 @@ jobs:
           lime rebuild windows -64 -release -nocolor -verbose -nocffi
           lime rebuild hl -clean -release -nocolor -verbose -nocffi
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Windows-NDLL
           path: |
@@ -181,7 +181,7 @@ jobs:
             !**/.gitignore
           if-no-files-found: error
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Windows64-NDLL
           path: |
@@ -189,7 +189,7 @@ jobs:
             !**/.gitignore
           if-no-files-found: error
 
-      # - uses: actions/upload-artifact@v3
+      # - uses: actions/upload-artifact@main
       #   with:
       #     name: Windows-Hashlink
       #     path: |
@@ -262,7 +262,7 @@ jobs:
         run: |
           lime rebuild android -release -nocolor -verbose -nocffi
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Android-NDLL
           path: |
@@ -312,7 +312,7 @@ jobs:
         run: |
           lime rebuild ios -clean -release -verbose -nocolor
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: iPhone-NDLL
           path: |
@@ -353,37 +353,37 @@ jobs:
           haxelib run lime rebuild tools -nocolor -verbose -nocffi
           haxelib run lime setup -alias -y -nocffi
           cp project/lib/hashlink/other/osx/entitlements.xml templates/bin/hl/entitlements.xml
-      - uses: actions/download-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Android-NDLL
           path: ndll/Android/
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: iPhone-NDLL
           path: ndll/iPhone/
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Linux-NDLL
           path: ndll/Linux/
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Linux64-NDLL
           path: ndll/Linux64/
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Mac64-NDLL
           path: ndll/Mac64/
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Windows-NDLL
           path: ndll/Windows/
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Windows64-NDLL
           path: ndll/Windows64/
@@ -393,22 +393,22 @@ jobs:
       #     name: Windows-Hashlink
       #     path: templates/bin/hl/Windows
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Windows64-Hashlink
           path: templates/bin/hl/Windows64
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Mac64-Hashlink
           path: templates/bin/hl/Mac64
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: Linux64-Hashlink
           path: templates/bin/hl/Linux64
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: lime-haxelib
           path: |
@@ -445,7 +445,7 @@ jobs:
         run: |
           haxe build.hxml
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: lime-docs
           path: docs/pages
@@ -558,8 +558,7 @@ jobs:
     needs: package-haxelib
     strategy:
       matrix:
-        os: [ubuntu-20.04
-        , macos-11, windows-latest]
+        os: [ubuntu-20.04, macos-11, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
 
@@ -916,14 +915,3 @@ jobs:
           lime build HelloWorld windows -release -verbose -nocolor
           lime build SimpleImage windows -release -verbose -nocolor
           lime build SimpleAudio windows -release -verbose -nocolor
-
-  notify:
-    runs-on: ubuntu-20.04
-    needs: [package-haxelib, docs, android-samples, flash-samples, hashlink-samples, html5-samples, ios-samples, linux-samples, macos-samples, neko-samples, windows-samples]
-    if: ${{ github.repository == 'openfl/lime' && github.event_name != 'pull_request' }}
-    steps:
-      - name: Notify Discord
-        uses: nobrayner/discord-webhook@v1
-        with:
-          github-token: ${{ secrets.github_token }}
-          discord-webhook: ${{ secrets.DISCORD_WEBHOOK }}
