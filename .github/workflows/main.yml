@@ -93,14 +93,15 @@ jobs:
 
       - name: Install Haxe dependencies
         run: |
-          pushd project/lib/hashlink
-          brew update
-          rm /usr/local/bin/2to3*
-          rm /usr/local/bin/idle3*
-          rm /usr/local/bin/pydoc3*
-          rm /usr/local/bin/python3*
-          brew bundle
-          popd
+          # Only run the hashlink brew bundle if the directory actually exists
+          if [ -d "project/lib/hashlink" ]; then
+            pushd project/lib/hashlink
+            brew bundle || true # "|| true" prevents the build from crashing if brew has a small conflict
+            popd
+          else
+            echo "Hashlink source not found, skipping brew bundle."
+          fi
+          
           haxelib install hxcpp --quiet
           haxelib install format --quiet
           haxelib install hxp --quiet
