@@ -628,27 +628,35 @@ jobs:
       - name: Build HelloWorld
         working-directory: HelloWorld
         run: |
-          lime build hl -release -verbose -nocolor
-          if [ "${{ runner.os }}" != "Windows" ]; then
-            find Export -type f -name "HelloWorld*" -exec chmod +x {} +
+          # Use -no-subprojects to skip the icon replacement tool that is crashing on Windows
+          lime build hl -release -verbose -nocolor -no-subprojects
+          
+          # Only run chmod if the file exists and we are on Linux/Mac
+          if [[ "${{ runner.os }}" != "Windows" ]]; then
+             if [ -f "Export/hl/bin/HelloWorld" ]; then
+                chmod +x Export/hl/bin/HelloWorld
+             else
+                # Fallback: search for the binary if the path is different
+                find Export -type f -name "HelloWorld*" -exec chmod +x {} +
+             fi
           fi
         shell: bash
 
       - name: Build SimpleImage
         working-directory: SimpleImage
         run: |
-          lime build hl -release -verbose -nocolor
-          if [ "${{ runner.os }}" != "Windows" ]; then
-            find Export -type f -name "SimpleImage*" -exec chmod +x {} +
+          lime build hl -release -verbose -nocolor -no-subprojects
+          if [[ "${{ runner.os }}" != "Windows" ]]; then
+             find Export -type f -name "SimpleImage*" -exec chmod +x {} +
           fi
         shell: bash
 
       - name: Build SimpleAudio
         working-directory: SimpleAudio
         run: |
-          lime build hl -release -verbose -nocolor
-          if [ "${{ runner.os }}" != "Windows" ]; then
-            find Export -type f -name "SimpleAudio*" -exec chmod +x {} +
+          lime build hl -release -verbose -nocolor -no-subprojects
+          if [[ "${{ runner.os }}" != "Windows" ]]; then
+             find Export -type f -name "SimpleAudio*" -exec chmod +x {} +
           fi
         shell: bash
         
