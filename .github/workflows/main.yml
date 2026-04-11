@@ -362,37 +362,37 @@ jobs:
             echo "Warning: entitlements.xml not found, skipping copy."
           fi
           
-      - uses: actions/upload-artifact@main
+      - uses: actions/download-artifact@main
         with:
           name: Android-NDLL
           path: ndll/Android/
 
-      - uses: actions/upload-artifact@main
+      - uses: actions/download-artifact@main
         with:
           name: iPhone-NDLL
           path: ndll/iPhone/
 
-      - uses: actions/upload-artifact@main
+      - uses: actions/download-artifact@main
         with:
           name: Linux-NDLL
           path: ndll/Linux/
 
-      - uses: actions/upload-artifact@main
+      - uses: actions/download-artifact@main
         with:
           name: Linux64-NDLL
           path: ndll/Linux64/
 
-      - uses: actions/upload-artifact@main
+      - uses: actions/download-artifact@main
         with:
           name: Mac64-NDLL
           path: ndll/Mac64/
 
-      - uses: actions/upload-artifact@main
+      - uses: actions/download-artifact@main
         with:
           name: Windows-NDLL
           path: ndll/Windows/
 
-      - uses: actions/upload-artifact@main
+      - uses: actions/download-artifact@main
         with:
           name: Windows64-NDLL
           path: ndll/Windows64/
@@ -407,12 +407,12 @@ jobs:
           name: Windows64-Hashlink
           path: templates/bin/hl/Windows64
 
-      - uses: actions/upload-artifact@main
+      - uses: actions/download-artifact@main
         with:
           name: Mac64-Hashlink
           path: templates/bin/hl/Mac64
 
-      - uses: actions/upload-artifact@main
+      - uses: actions/download-artifact@main
         with:
           name: Linux64-Hashlink
           path: templates/bin/hl/Linux64
