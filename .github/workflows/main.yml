@@ -625,22 +625,33 @@ jobs:
           lime create SimpleImage -verbose -nocolor
           lime create SimpleAudio -verbose -nocolor
 
-      - name: Build Lime samples
+      - name: Build HelloWorld
+        working-directory: HelloWorld
         run: |
-          lime build HelloWorld hl -release -verbose -nocolor
-          lime build SimpleImage hl -release -verbose -nocolor
-          lime build SimpleAudio hl -release -verbose -nocolor
-          
-          # Only run chmod on non-Windows runners
+          lime build hl -release -verbose -nocolor
           if [ "${{ runner.os }}" != "Windows" ]; then
-            echo "Applying permissions to HashLink binaries..."
-            # This finds any file named HelloWorld in the Export folder and makes it executable
-            find Export -name "HelloWorld" -exec chmod +x {} +
-            find Export -name "SimpleImage" -exec chmod +x {} +
-            find Export -name "SimpleAudio" -exec chmod +x {} +
+            find Export -type f -name "HelloWorld*" -exec chmod +x {} +
           fi
-        shell: bash # Force bash even on Windows so the 'if' statement works
+        shell: bash
 
+      - name: Build SimpleImage
+        working-directory: SimpleImage
+        run: |
+          lime build hl -release -verbose -nocolor
+          if [ "${{ runner.os }}" != "Windows" ]; then
+            find Export -type f -name "SimpleImage*" -exec chmod +x {} +
+          fi
+        shell: bash
+
+      - name: Build SimpleAudio
+        working-directory: SimpleAudio
+        run: |
+          lime build hl -release -verbose -nocolor
+          if [ "${{ runner.os }}" != "Windows" ]; then
+            find Export -type f -name "SimpleAudio*" -exec chmod +x {} +
+          fi
+        shell: bash
+        
   html5-samples:
     needs: package-haxelib
     runs-on: macos-latest
