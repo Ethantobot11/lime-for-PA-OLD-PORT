@@ -190,12 +190,12 @@ jobs:
             !**/.gitignore
           if-no-files-found: error
 
-      # - uses: actions/upload-artifact@main
-      #   with:
-      #     name: Windows-Hashlink
-      #     path: |
-      #       templates/bin/hl/Windows
-      #     if-no-files-found: error
+      - uses: actions/upload-artifact@main
+        with:
+           name: Windows-Hashlink
+           path: |
+             templates/bin/hl/Windows
+             if-no-files-found: error
       - uses: actions/upload-artifact@main
         with:
           name: Windows64-Hashlink
@@ -354,7 +354,14 @@ jobs:
           haxelib dev lime $GITHUB_WORKSPACE
           haxelib run lime rebuild tools -nocolor -verbose -nocffi
           haxelib run lime setup -alias -y -nocffi
-          cp project/lib/hashlink/other/osx/entitlements.xml templates/bin/hl/entitlements.xml
+          
+          # Only copy if the file actually exists
+          if [ -f "project/lib/hashlink/other/osx/entitlements.xml" ]; then
+            cp project/lib/hashlink/other/osx/entitlements.xml templates/bin/hl/entitlements.xml
+          else
+            echo "Warning: entitlements.xml not found, skipping copy."
+          fi
+          
       - uses: actions/upload-artifact@main
         with:
           name: Android-NDLL
@@ -390,10 +397,10 @@ jobs:
           name: Windows64-NDLL
           path: ndll/Windows64/
 
-      # - uses: actions/download-artifact@v3
-      #   with:
-      #     name: Windows-Hashlink
-      #     path: templates/bin/hl/Windows
+      - uses: actions/download-artifact@v3
+        with:
+          name: Windows-Hashlink
+          path: templates/bin/hl/Windows
 
       - uses: actions/upload-artifact@main
         with:
