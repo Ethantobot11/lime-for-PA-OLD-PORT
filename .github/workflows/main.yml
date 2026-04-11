@@ -4,7 +4,7 @@ on: workflow_dispatch
 jobs:
 
   linux-ndll:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         haxe-version: [3.4.7, 4.0.5, 4.1.5, 4.2.5]
@@ -76,7 +76,7 @@ jobs:
           if-no-files-found: error
 
   macos-ndll:
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
 
       - uses: actions/checkout@v3
@@ -204,7 +204,7 @@ jobs:
 
   android-ndll:
     needs: macos-ndll
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
 
       - uses: actions/checkout@v3
@@ -272,7 +272,7 @@ jobs:
 
   ios-ndll:
     needs: macos-ndll
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
 
       - uses: actions/checkout@v3
@@ -322,7 +322,7 @@ jobs:
 
   package-haxelib:
     needs: [linux-ndll, macos-ndll, windows-ndll, android-ndll, ios-ndll]
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
 
       - uses: actions/checkout@v3
@@ -420,7 +420,7 @@ jobs:
           if-no-files-found: error
 
   docs:
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
 
       - uses: actions/checkout@v3
@@ -453,7 +453,7 @@ jobs:
 
   android-samples:
     needs: package-haxelib
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
 
       - name: Install Android NDK
@@ -517,7 +517,7 @@ jobs:
 
   flash-samples:
     needs: package-haxelib
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
 
       - uses: krdlab/setup-haxe@v1
@@ -558,7 +558,7 @@ jobs:
     needs: package-haxelib
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-11, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
 
@@ -623,7 +623,7 @@ jobs:
 
   html5-samples:
     needs: package-haxelib
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
 
       - uses: krdlab/setup-haxe@v1
@@ -662,7 +662,7 @@ jobs:
 
   ios-samples:
     needs: package-haxelib
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
 
       - uses: krdlab/setup-haxe@v1
@@ -708,7 +708,7 @@ jobs:
 
   linux-samples:
     needs: package-haxelib
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
 
       - name: Install system dependencies
@@ -759,7 +759,7 @@ jobs:
 
   macos-samples:
     needs: package-haxelib
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
 
       - uses: krdlab/setup-haxe@v1
@@ -807,7 +807,7 @@ jobs:
     needs: package-haxelib
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-11, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
 
