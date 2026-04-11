@@ -397,7 +397,7 @@ jobs:
           name: Windows64-NDLL
           path: ndll/Windows64/
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@main
         with:
           name: Windows-Hashlink
           path: templates/bin/hl/Windows
