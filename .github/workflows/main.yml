@@ -223,7 +223,7 @@ jobs:
           distribution: 'zulu'
           java-version: '11' # Use 11 or 17 instead of 8
 
-      - uses: krdlab/setup-haxe@v1
+      - uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.2.5
 
