@@ -402,7 +402,7 @@ jobs:
           name: Windows-Hashlink
           path: templates/bin/hl/Windows
 
-      - uses: actions/upload-artifact@main
+      - uses: actions/download-artifact@main
         with:
           name: Windows64-Hashlink
           path: templates/bin/hl/Windows64
