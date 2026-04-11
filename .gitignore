@@ -11,7 +11,6 @@ ndll/*/*.dylib
 ndll/*/*.lib
 ndll/*/hl*
 ndll/*/*.dll
-templates/bin/hl/*
 project/all_objs
 project/obj
 project/vc*.pdb
