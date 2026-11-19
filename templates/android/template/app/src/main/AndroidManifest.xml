@@ -31,6 +31,21 @@
 			
 		</activity>
 		
+		::if (SHARE_FILES)::
+		<provider
+    		android:name="org.haxe.lime.StorageProvider"
+    		android:authorities="::APP_PACKAGE::.documentsprovider"
+    		android:exported="true"
+    		android:grantUriPermissions="true"
+			::if (ANDROID_USE_ANDROIDX)::
+			android:permission="android.permission.MANAGE_DOCUMENTS">
+			::end::
+    		<intent-filter>
+        		<action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+    		</intent-filter>
+		</provider>
+		::end::
+		
 	</application>
 	
 </manifest>
