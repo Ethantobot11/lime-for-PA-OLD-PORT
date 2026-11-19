@@ -464,6 +464,8 @@ class AndroidPlatform extends PlatformTarget
 
 		context.ANDROID_LIBRARY_PROJECTS = [];
 
+		context.SHARE_FILES = project.haxedefs.exists("SHARE_MOBILE_FILES");
+
 		if (!project.environment.exists("ANDROID_SDK") || !project.environment.exists("ANDROID_NDK_ROOT"))
 		{
 			var command = #if lime "lime" #else "hxp" #end;
