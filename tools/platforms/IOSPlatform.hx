@@ -449,6 +449,10 @@ class IOSPlatform extends PlatformTarget
 			context.HAXELIB_PATH = '';
 		}
 
+		context.CATEGORY_TYPE = project.config.getString("ios.category_type", "public.app-category.entertainment");
+		
+		context.SHARE_FILES = project.haxedefs.exists("SHARE_MOBILE_FILES");
+
 		return context;
 	}
 
